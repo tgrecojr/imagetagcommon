@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 @Component
 public class DetectedLabelRepository {
@@ -42,6 +43,17 @@ public class DetectedLabelRepository {
         return jdbcTemplate.queryForObject(
                 "select id, labelname from labels where labelname = '" + detectedLabelName +"'",
                 (rs, i) -> new DetectedLabel(rs.getInt("id"), rs.getString("labelname")));
+    }
+
+    public List<DetectedLabel> findAll() {
+
+        List<DetectedLabel> result = jdbcTemplate.query(
+                "SELECT id,labelname FROM labels",
+                (rs, rowNum) -> new DetectedLabel(rs.getInt("id"), rs.getString("labelname"))
+        );
+
+        return result;
+
     }
 
 }
