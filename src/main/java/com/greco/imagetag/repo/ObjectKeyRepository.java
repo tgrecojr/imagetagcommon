@@ -4,8 +4,10 @@ package com.greco.imagetag.repo;
 import com.greco.imagetag.model.ObjectKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -54,10 +56,16 @@ public class ObjectKeyRepository  {
 
     @Cacheable("objectkey")
     public ObjectKey findObjectKey(String bucket, String objectKey){
-        return jdbcTemplate.queryForObject(
-                "select id, bucket, objectkey from images where bucket = '" + bucket + "' and objectkey = '" + objectKey +"'",
-                (rs, i) -> new ObjectKey(rs.getInt("id"), rs.getString("bucket"), rs.getString("objectkey")));
+
+        try{
+            return jdbcTemplate.queryForObject(
+                    "select id, bucket, objectkey from images where bucket = '" + bucket + "' and objectkey = '" + objectKey +"'",
+                    (rs, i) -> new ObjectKey(rs.getInt("id"), rs.getString("bucket"), rs.getString("objectkey")));
+        }catch (EmptyResultDataAccessException e){
+            return new ObjectKey();
+        }
     }
+
 
 
 }
