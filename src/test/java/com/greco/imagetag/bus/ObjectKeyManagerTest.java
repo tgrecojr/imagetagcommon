@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 @JdbcTest
 @ComponentScan("com.greco.imagetag")
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
+
 public class ObjectKeyManagerTest {
 
     @Autowired
@@ -46,6 +48,21 @@ public class ObjectKeyManagerTest {
         labels.add(dl2);
         ok.setDetectedLabels(labels);
         objectKeyManager.saveObjectKeyAndLabels(ok);
+
+    }
+
+    @Test
+    public void objectKeyExistsInBucket(){
+        ObjectKey ok =new ObjectKey("bucket","keyname");
+        ArrayList labels = new ArrayList();
+        DetectedLabel dl1 = new DetectedLabel("labelname",75f);
+        DetectedLabel dl2 = new DetectedLabel("labelname2",75f);
+        labels.add(dl1);
+        labels.add(dl2);
+        ok.setDetectedLabels(labels);
+        objectKeyManager.saveObjectKeyAndLabels(ok);
+        boolean theReturn = objectKeyManager.objectKeyExistsInBucket("bucket","keyname");
+        assertThat(theReturn).isTrue();
 
     }
 

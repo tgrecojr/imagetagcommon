@@ -1,5 +1,6 @@
 package com.greco.imagetag.repo;
 
+import com.greco.imagetag.model.DetectedLabel;
 import com.greco.imagetag.model.ObjectKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

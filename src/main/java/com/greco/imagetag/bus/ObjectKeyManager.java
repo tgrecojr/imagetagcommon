@@ -58,4 +58,13 @@ public class ObjectKeyManager {
         });
 
     }
+
+    public boolean objectKeyExistsInBucket(String bucket, String objectKey){
+        ObjectKey ok = objectKeyRepository.findObjectKey(bucket, objectKey);
+        if (ok.getObjectKeyName().equalsIgnoreCase(objectKey)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
