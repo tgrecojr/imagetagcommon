@@ -6,7 +6,7 @@
 
     <groupId>com.greco.imagetag</groupId>
     <artifactId>imagetagcommon</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.11.163</version>
+            <version>1.11.175</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
