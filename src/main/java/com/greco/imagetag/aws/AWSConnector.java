@@ -18,18 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AWSConnector implements InitializingBean{
+public class AWSConnector {
 
-    @Value("${aws.profile}")
-    private String amazonProfileName;
-    @Value("${aws.region}")
-    private String amazonRegionName;
+
+
     private AmazonS3 s3Client;
     private AmazonRekognition rekognitionClient;
 
+    //prevent default contstructor
+    private AWSConnector(){
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    }
+
+    public AWSConnector(String amazonProfileName, String amazonRegionName){
         AmazonS3Client.builder();
         s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(amazonRegionName)
@@ -40,8 +41,8 @@ public class AWSConnector implements InitializingBean{
                 .withRegion(amazonRegionName)
                 .withCredentials(new ProfileCredentialsProvider(amazonProfileName))
                 .build();
-
     }
+
 
     public ArrayList<String> getS3ObjectKeysForBucket(String bucket) {
         final ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucket);
