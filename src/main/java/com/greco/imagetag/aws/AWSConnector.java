@@ -85,4 +85,8 @@ public class AWSConnector {
         s3Client.setObjectTagging(new SetObjectTaggingRequest(bucket, objectKey, new ObjectTagging(s3Tags)));
     }
 
+    public void deleteObjectTagsForBuckeyAndKey(String bucket,String objectKey){
+        s3Client.deleteObjectTagging(new DeleteObjectTaggingRequest(bucket,objectKey));
+    }
+
 }
